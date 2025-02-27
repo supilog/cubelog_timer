@@ -1,0 +1,452 @@
+@font-face {
+    font-family: 'Seg';
+    src: url('/fonts/7barP.TTF');
+}
+
+$cube-size: 10px;
+
+$breakpoints: (
+    'sm': 'screen and (min-width: 576px)',
+    'md': 'screen and (min-width: 768px)',
+    'lg': 'screen and (min-width: 992px)',
+    'xl': 'screen and (min-width: 1200px)',
+) !default;
+@mixin media($breakpoint) {
+    @media #{map-get($breakpoints, $breakpoint)} {
+        @content;
+    }
+}
+
+#index {
+    /* モーダルを開くボタン */
+    .modal-open{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        font-size: 16px;
+        font-weight: bold;
+        width: 300px;
+        height: 60px;
+        color: #fff;
+        background: #000;
+        border: none;
+        cursor: pointer;
+        translate: -50% -50%;
+    }
+
+    /* モーダルと背景の指定 */
+    .modal{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        background: rgba(0,0,0,50%);
+        padding: 40px 20px;
+        overflow: auto;
+        opacity: 0;
+        visibility: hidden;
+        transition: .3s;
+        box-sizing: border-box;
+    }
+
+    /* モーダルの擬似要素の指定 */
+    .modal:before{
+        content: "";
+        display: inline-block;
+        vertical-align: middle;
+        height: 100%;
+        margin-left: -0.2em;
+    }
+
+    /* クラスが追加された時の指定 */
+    .modal.is-active{
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* モーダル内側の指定 */
+    .modal-container{
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        max-width: 600px;
+        width: 90%;
+    }
+
+    /* モーダルを閉じるボタンの指定 */
+    .modal-close{
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: -20px;
+        right: -20px;
+        width: 40px;
+        height: 40px;
+        color: #fff;
+        background: #000;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    /* モーダルのコンテンツ部分の指定 */
+    .modal-content{
+        background: #fff;
+        text-align: left;
+        line-height: 1.8;
+        padding: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content:center;
+
+        a {
+            margin: 0 1rem;
+            padding: 0 1rem;
+            border: 1px solid #000;
+            &:hover {
+                cursor: pointer;
+                background-color: #000;
+                color: #fff;
+            }
+        }
+    }
+
+    /* モーダルのコンテンツ部分のテキストの指定 */
+    .modal-content p{
+        margin: 1em 0;
+    }
+    main {
+        h1 {
+            font-family: Seg;
+            font-size: 10rem;
+            display: block;
+        }
+
+        .scramble {
+            font-size: 2rem;
+        }
+
+        .result-menu {
+
+        }
+
+        .cube {
+            position: relative;
+            display: block;
+            width: calc($cube-size * 12);
+            height: calc($cube-size * 9);
+            z-index: 0;
+            @include media(sm) {
+                width: calc($cube-size * 12);
+                height: calc($cube-size * 9);
+            }
+
+            .surface {
+                position: absolute;
+                width: calc($cube-size * 3);
+                height: calc($cube-size * 3);
+                @include media(sm) {
+                    width: calc($cube-size * 3);
+                    height: calc($cube-size * 3);
+                }
+
+                .parent {
+                    width: 100%;
+                    height: 100%;
+
+                    .part {
+                        position: absolute;
+                        width: calc($cube-size - 2px);
+                        height: calc($cube-size - 2px);
+                        border: 1px solid #000;
+
+                        &.p1 {
+                            top: 0px;
+                            left: 0px;
+                        }
+
+                        &.p2 {
+                            top: 0px;
+                            left: calc($cube-size * 1);
+                        }
+
+                        &.p3 {
+                            top: 0px;
+                            left: calc($cube-size * 2);
+                        }
+
+                        &.p4 {
+                            top: calc($cube-size * 1);
+                            left: 0px;
+                        }
+
+                        &.p5 {
+                            top: calc($cube-size * 1);
+                            left: calc($cube-size * 1);
+                        }
+
+                        &.p6 {
+                            top: calc($cube-size * 1);
+                            left: calc($cube-size * 2);
+                        }
+
+                        &.p7 {
+                            top: calc($cube-size * 2);
+                            left: 0px;
+                        }
+
+                        &.p8 {
+                            top: calc($cube-size * 2);
+                            left: calc($cube-size * 1);
+                        }
+
+                        &.p9 {
+                            top: calc($cube-size * 2);
+                            left: calc($cube-size * 2);
+                        }
+                    }
+                }
+
+                &.u {
+                    top: 0px;
+                    left: calc($cube-size * 3);
+
+                    .parent {
+                        .part {
+                            background-color: #e6e600;
+                        }
+                    }
+                }
+
+                &.d {
+                    top: calc($cube-size * 6);
+                    left: calc($cube-size * 3);
+
+                    .parent {
+                        .part {
+                            background-color: #ffffff;
+                        }
+                    }
+                }
+
+                &.b {
+                    top: calc($cube-size * 3);
+                    left: calc($cube-size * 9);
+
+                    .parent {
+                        .part {
+                            background-color: #2950c7;
+                        }
+                    }
+                }
+
+                &.f {
+                    top: calc($cube-size * 3);
+                    left: calc($cube-size * 3);
+
+                    .parent {
+                        .part {
+                            background-color: #459934;
+                        }
+                    }
+                }
+
+                &.l {
+                    top: calc($cube-size * 3);
+                    left: 0px;
+
+                    .parent {
+                        .part {
+                            background-color: #b80505;
+                        }
+                    }
+                }
+
+                &.r {
+                    top: calc($cube-size * 3);
+                    left: calc($cube-size * 6);
+
+                    .parent {
+                        .part {
+                            background-color: #f55200;
+                        }
+                    }
+                }
+            }
+        }
+
+        #timer {
+            &.ready {
+                color: #459934;
+            }
+
+            &.wait {
+                color: #fe0000;
+            }
+        }
+    }
+}
+
+@mixin fluid-type($properties, $min-vw, $max-vw, $min-value, $max-value) {
+    @each $property in $properties {
+        #{$property}: $min-value;
+    }
+
+    @media screen and (min-width: $min-vw) {
+        @each $property in $properties {
+            #{$property}: calc(#{$min-value} + #{strip-unit($max-value - $min-value)} * (100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)});
+        }
+    }
+
+    @media screen and (min-width: $max-vw) {
+        @each $property in $properties {
+            #{$property}: $max-value;
+        }
+    }
+}
+
+@function strip-unit($value) {
+    @return $value / ($value * 0 + 1);
+}
+
+@function em($pixels, $context: $default-font-size) {
+    @return #{$pixels/$context}em;
+}
+
+// variables
+:root {
+    --sidebar-width: 100%;
+    --toggler-size: 30px;
+    --toggler-line-number: 3;
+    --toggler-line-size: calc(var(--toggler-size) / (var(--toggler-line-number) + var(--toggler-line-number) - 1));
+    --toggler-offset-left: 10px;
+    --toggler-offset-top: 10px;
+    --toggler-color: #336B87;
+    --toggler-color-hover: Wheat;
+}
+
+// same as var(--toggler-line-number)
+$total: 3;
+
+// reset
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+// styling
+html {
+    font-family: -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
+    @include fluid-type(font-size, 20em, 75em, .8rem, 1.2rem);
+}
+
+.wrapper {
+    min-width: 100vw;
+    background: AliceBlue;
+    display: flex;
+}
+
+.sidebar,
+.content {
+    transition: all .25s ease-out;
+}
+
+.sidebar {
+    width: var(--sidebar-width);
+    transform: translateX(calc(var(--sidebar-width) * -1));
+    background: linear-gradient(to bottom right, #336B87, Wheat);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    height: 100vh;
+    opacity: .5;
+    z-index: 2;
+
+    &.checked {
+        transform: translateX(0);
+        opacity: .98;
+    }
+}
+
+.content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    //justify-content: center;
+    flex-direction: column;
+}
+
+.menu {
+    list-style-type: none;
+}
+
+.menu__link {
+    color: white;
+    font-weight: 100;
+    text-decoration: none;
+    font-size: 10vmin;
+    line-height: 15vmin;
+    transition: all .25s ease-out;
+
+    &:hover,
+    {
+        color: Gold;
+    }
+}
+
+// help
+.helpbar {
+    transition: all .25s ease-out;
+}
+
+.helpbar {
+    list-style-type: none;
+    transition: all .25s ease-out;
+    width: var(--sidebar-width);
+    transform: translateX(calc(var(--sidebar-width) * -1));
+    background: linear-gradient(to bottom right, #336B87, Wheat);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    height: 100vh;
+    opacity: .5;
+    z-index: 2;
+
+    &.checked {
+        transform: translateX(0);
+        opacity: .98;
+    }
+}
+
+// sig
+.wrapper {
+    height: calc(100vh - 50px);
+}
+
+.sb-link {
+    display: flex;
+    height: 50px;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #bb5555;
+    transition: background .3s;
+}
+
+.sb-link:hover,
+.sb-link:focus,
+.sb-link:active {
+    background: #f7f7f7;
+}
+
